@@ -1,0 +1,9 @@
+
+# 测试http获取faucet,  https://faucet.{env}.sui.io/v1/gas
+# env: testnet | devnet | localnet
+POST  https://faucet.testnet.sui.io/v1/gas
+Content-Type: application/json
+
+{
+"FixedAmountRequest":{"recipient":"your address"}
+}
