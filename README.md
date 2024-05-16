@@ -1,0 +1,1 @@
+this is Sui Faucet for Sui Network
