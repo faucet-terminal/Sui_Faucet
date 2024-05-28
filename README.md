@@ -1,32 +1,14 @@
-# Sui链获取Faucet coin
-[官方sdk文档](https://sdk.mystenlabs.com/dapp-kit)
+# 领取 sui faucet 
 
-## pnpm 安装部署
-install pnpm
-```shell
-npm i pnpm -g
-```
-To install dependencies
-```shell
-pnpm install
-```
-To start your dApp in development mode run
-```shell
-pnpm dev
-```
-## npm 安装部署
-To install dependencies
-```shell
-npm install
-```
-To start your dApp in development mode run
-```shell
-npm run dev
-```
+- 1.backend api in main branch
 
-## 示例
-- 1.连接钱包
-![](images/connect_wallet.png)
-
-- 2.选择网络，获取水龙头
-  ![](images/get_faucet_coin.png)
+```json5
+//POST http://localhost:6002/sui/request
+//Content-Type: application/json
+{
+"network": "testnet",      // 网络环境
+"address": "your address", // 地址
+//"amount": "1111"         // 金额，sui rpc 固定 1 sui,因此该不支持自定义amount
+}
+```
+- 2.frontend  in frontend branch

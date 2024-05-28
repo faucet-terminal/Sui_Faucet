@@ -1,0 +1,28 @@
+
+# 测试http获取faucet,  https://faucet.{env}.sui.io/v1/gas
+# env: testnet | devnet | localnet
+# reponse
+# {
+#  "task": "cca52e63-dd56-4f23-9b26-479ee43c83fa",
+#  "error": null
+# }
+POST  https://faucet.testnet.sui.io/v1/gas
+Content-Type: application/json
+
+{
+  "FixedAmountRequest": {
+    "recipient": "your address"
+  }
+}
+
+
+###
+
+POST http://localhost:6002/sui/request
+Content-Type: application/json
+
+{
+  "network": "testnet",
+  "address": "your address",
+  "amount": "1111"
+}
