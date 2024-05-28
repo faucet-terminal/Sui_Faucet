@@ -13,7 +13,6 @@ use thiserror::Error;
 struct TransferPost {
     address: String,
     network: String,
-    amount: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -65,12 +64,6 @@ impl Into<AxumJson<TransferErrorRes>> for TransferError {
     }
 }
 
-impl IntoResponse for TransferRes {
-    fn into_response(self) -> Response {
-        let json = axum::Json(self);
-        (StatusCode::OK, json).into_response()
-    }
-}
 
 impl IntoResponse for TransferError {
     fn into_response(self) -> Response {
@@ -86,7 +79,7 @@ impl IntoResponse for TransferError {
 
 const VALID_NETWORKS: &[&str] = &["testnet", "devnet", "localnet"];
 
-async fn transfer(data: Json<TransferPost>) -> StdResult<TransferRes, TransferError> {
+async fn transfer(data: Json<TransferPost>) -> StdResult<Json<TransferRes>, TransferError> {
     println!("data: {:#?}", data);
 
     if !VALID_NETWORKS.contains(&data.network.as_str()) {
@@ -113,11 +106,11 @@ async fn transfer(data: Json<TransferPost>) -> StdResult<TransferRes, TransferEr
             TransferError::NetworkError(e.to_string())
         })?;
 
-        Ok(TransferRes {
+        Ok(Json(TransferRes {
             success: true,
             tx_id: faucet_response.task.clone(),
             explorer_url: explorer_url(&faucet_response.task, &data.network),
-        })
+        }))
     } else {
         Err(TransferError::NetworkError(format!(
             "Response status: {}",

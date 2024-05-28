@@ -26,3 +26,14 @@ Content-Type: application/json
   "address": "your address",
   "amount": "1111"
 }
+
+
+###
+POST http://150.158.30.101:6002/sui/request
+Content-Type: application/json
+
+{
+  "network": "testnet",
+  "address": "0xe29fa8db4cb05d9b3b436784f146e1297f65fffdd5f69f7803844a5d81e0850c",
+  "amount": "111"
+}
