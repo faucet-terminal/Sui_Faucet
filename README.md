@@ -8,6 +8,7 @@ POST http://localhost:6002/sui/request
 Content-Type: application/json
 
 注：不支持自定义amount,testnet固定领取1sui
+network： 测试环境：testnet, 开发环境：devnet, 环境：localnet
 请求参数
 ```json5
 {
