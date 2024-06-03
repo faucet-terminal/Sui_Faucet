@@ -17,9 +17,16 @@ struct TransferPost {
 
 #[derive(Debug, Serialize, Deserialize)]
 struct FaucetResponse {
-    task: String,
+    transferredGasObjects:  Vec<TransferredGasObject>,
     error: Option<String>,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+struct TransferredGasObject {
+    id: String,
+    transferTxDigest: String
+}
+
 
 #[derive(Debug, Serialize)]
 struct TransferRes {
@@ -95,7 +102,7 @@ async fn transfer(data: Json<TransferPost>) -> StdResult<Json<TransferRes>, Tran
 
     // 发送 POST 请求
     let response = client
-        .post(format!("https://faucet.{}.sui.io/v1/gas", &data.network))
+        .post(format!("https://faucet.{}.sui.io/gas", &data.network))
         .json(&request_body)
         .send()
         .await
@@ -105,11 +112,12 @@ async fn transfer(data: Json<TransferPost>) -> StdResult<Json<TransferRes>, Tran
         let faucet_response: FaucetResponse = response.json().await.map_err(|e| {
             TransferError::NetworkError(e.to_string())
         })?;
-
+        let gas_object  = faucet_response.transferredGasObjects.first().unwrap();
+        let tx_id = gas_object.transferTxDigest.clone();
         Ok(Json(TransferRes {
             success: true,
-            tx_id: faucet_response.task.clone(),
-            explorer_url: explorer_url(&faucet_response.task, &data.network),
+            tx_id: tx_id,
+            explorer_url: explorer_url(&gas_object.transferTxDigest, &data.network),
         }))
     } else {
         Err(TransferError::NetworkError(format!(

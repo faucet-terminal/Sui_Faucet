@@ -1,12 +1,7 @@
 
-# 测试http获取faucet,  https://faucet.{env}.sui.io/v1/gas
+# 测试http获取faucet,  https://faucet.{env}.sui.io/gas
 # env: testnet | devnet | localnet
-# reponse
-# {
-#  "task": "cca52e63-dd56-4f23-9b26-479ee43c83fa",
-#  "error": null
-# }
-POST  https://faucet.testnet.sui.io/v1/gas
+POST  https://faucet.testnet.sui.io/gas
 Content-Type: application/json
 
 {
@@ -18,7 +13,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:6002/sui/request
+POST http://0.0.0.0:6002/sui/request
 Content-Type: application/json
 
 {
@@ -34,6 +29,6 @@ Content-Type: application/json
 
 {
   "network": "testnet",
-  "address": "0xe29fa8db4cb05d9b3b436784f146e1297f65fffdd5f69f7803844a5d81e0850c",
+  "address": "your address",
   "amount": "111"
 }
